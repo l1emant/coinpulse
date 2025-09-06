@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 // Cryptocurrency icon components optimized for light theme
 const BitcoinIcon = () => (
@@ -122,6 +123,24 @@ const LitecoinIcon = () => (
 );
 
 export default function FloatingElements() {
+  const [mounted, setMounted] = useState(false);
+  const [particles, setParticles] = useState<Array<{left: number, top: number, duration: number, delay: number}>>([]);
+
+  useEffect(() => {
+    setMounted(true);
+    // Generate consistent particle positions only on client
+    const particlePositions = [...Array(18)].map((_, i) => ({
+      left: (i * 17.3 + 23.7) % 100, // Deterministic positions based on index
+      top: (i * 23.1 + 17.4) % 100,
+      duration: 4 + (i % 6), // Deterministic duration based on index  
+      delay: (i % 4) // Deterministic delay based on index
+    }));
+    setParticles(particlePositions);
+  }, []);
+
+  if (!mounted) {
+    return null; // Don't render on server to avoid hydration mismatch
+  }
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {/* Enhanced gradient background for better visibility */}
@@ -306,14 +325,14 @@ export default function FloatingElements() {
         <LitecoinIcon />
       </motion.div>
       
-      {/* Floating particles - enhanced subtly */}
-      {[...Array(18)].map((_, i) => (
+      {/* Floating particles with consistent positioning */}
+      {particles.map((particle, i) => (
         <motion.div
           key={i}
           className="absolute w-1.5 h-1.5 bg-primary/40 rounded-full shadow-sm"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
+            left: `${particle.left}%`,
+            top: `${particle.top}%`,
           }}
           animate={{
             y: [-35, 35, -35],
@@ -322,9 +341,9 @@ export default function FloatingElements() {
             opacity: [0.2, 0.6, 0.2],
           }}
           transition={{
-            duration: 4 + Math.random() * 6,
+            duration: particle.duration,
             repeat: Infinity,
-            delay: Math.random() * 4,
+            delay: particle.delay,
             ease: "easeInOut",
           }}
         />

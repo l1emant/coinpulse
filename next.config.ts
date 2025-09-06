@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Completely disable all development indicators
+  devIndicators: false,
+  experimental: {
+    optimizePackageImports: ['framer-motion', 'lucide-react']
+  }
 };
 
 export default nextConfig;
