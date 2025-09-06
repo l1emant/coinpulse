@@ -6,7 +6,7 @@ import FloatingElements from "@/components/ui/floating-elements"
 import { motion, AnimatePresence } from "framer-motion"
 import { TrendingUp, X } from "lucide-react"
 import { useState } from "react"
-import { ShimmerButton } from "@/components/magicui/shimmer-button"
+import { ShimmerButton } from "@/components/ui/shimmer-button"
 
 export default function Hero() {
   const [isModalOpen, setIsModalOpen] = useState(false)
