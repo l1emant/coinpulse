@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -173,7 +172,7 @@
   }
 }
 
-/* Glass Morphism Utilities */
+/* Glassmorphism Utility Classes */
 @layer components {
   .glass {
     @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl;
@@ -202,7 +201,7 @@
     box-shadow: none !important;
   }
   
-  /* Shimmer Button Animations */
+  /* Animation keyframes for essential UI components */
   @keyframes slide {
     to {
       transform: translate(calc(100cqw - 100%), 0);
@@ -224,38 +223,6 @@
     }
   }
   
-  @keyframes shimmer-sweep {
-    0% {
-      transform: translateX(-100%) rotate(45deg);
-    }
-    100% {
-      transform: translateX(400%) rotate(45deg);
-    }
-  }
-  
-  @keyframes glow-pulse {
-    0%, 100% {
-      opacity: 0.4;
-      filter: blur(1px);
-    }
-    50% {
-      opacity: 0.8;
-      filter: blur(0.5px);
-    }
-  }
-  
-  .animate-slide {
-    animation: slide var(--speed) ease-in-out infinite;
-  }
-  
-  .animate-spin-around {
-    animation: spin-around calc(var(--speed) * 2) linear infinite;
-  }
-  
-  .animate-shimmer-sweep {
-    animation: shimmer-sweep 3s ease-in-out infinite;
-  }
-  
   @keyframes subtle-gradient-flow {
     0% {
       background: linear-gradient(90deg, #3b82f6, #6366f1, #8b5cf6, #a855f7, #3b82f6);
@@ -270,16 +237,15 @@
     }
   }
   
-  @keyframes gentle-glow {
-    0%, 100% {
-      box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
-    }
-    50% {
-      box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
-    }
+  .animate-slide {
+    animation: slide var(--speed) ease-in-out infinite;
+  }
+  
+  .animate-spin-around {
+    animation: spin-around calc(var(--speed) * 2) linear infinite;
   }
   
   .animate-subtle-border {
-    animation: subtle-gradient-flow 4s ease-in-out infinite, gentle-glow 3s ease-in-out infinite;
+    animation: subtle-gradient-flow 3s ease-in-out infinite;
   }
 }

@@ -25,7 +25,7 @@ export default function Header() {
             <a href="#contact" className="text-foreground/70 hover:text-primary transition-colors duration-300 font-semibold">
               Contact
             </a>
-            {/* Login Button with shimmer */}
+            {/* Login button with subtle shimmer animation */}
             <motion.div className="relative group">
               <motion.div
                 className="absolute -inset-0.5 bg-gradient-to-r from-primary/15 via-purple-500/15 to-primary/15 rounded-md blur-sm opacity-0 group-hover:opacity-100"
@@ -51,7 +51,7 @@ export default function Header() {
               </Button>
             </motion.div>
             
-            {/* Sign Up Button with shimmer */}
+            {/* Sign up button with matching shimmer effect */}
             <motion.div className="relative group">
               <motion.div
                 className="absolute -inset-0.5 bg-gradient-to-r from-primary/15 via-purple-500/15 to-primary/15 rounded-md blur-sm opacity-0 group-hover:opacity-100"
@@ -76,7 +76,7 @@ export default function Header() {
               </Button>
             </motion.div>
           </div>
-          {/* Mobile menu button */}
+          {/* Mobile navigation menu button */}
           <Button variant="outline" size="icon" className="md:hidden border-primary/20 hover:border-primary/40 bg-white/20 hover:bg-white/30">
             <BarChart3 className="h-4 w-4" />
           </Button>

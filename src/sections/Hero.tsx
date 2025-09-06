@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import AnimatedText from "@/components/ui/animated-text"
 import FloatingElements from "@/components/ui/floating-elements"
 import { motion, AnimatePresence } from "framer-motion"
-import { TrendingUp, ChevronDown, ChevronUp, BarChart3, Shield, Zap, X } from "lucide-react"
+import { TrendingUp, X } from "lucide-react"
 import { useState } from "react"
 import { ShimmerButton } from "@/components/magicui/shimmer-button"
 
@@ -22,13 +22,13 @@ export default function Hero() {
     <section id="home" className="pt-0 pb-20 md:pb-32 relative overflow-hidden min-h-screen flex items-center">
       <FloatingElements />
       
-      {/* Enhanced background elements */}
+      {/* Background elements with enhanced visual appeal */}
       <div className="absolute inset-0">
-        {/* Additional gradient layers for depth */}
+        {/* Gradient layers for visual depth */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-primary/5 to-transparent" />
         
-        {/* Animated grid overlay */}
+        {/* Animated grid pattern overlay */}
         <motion.div 
           className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.08)_1px,transparent_1px)] bg-[size:60px_60px] opacity-20"
           animate={{
@@ -44,7 +44,7 @@ export default function Hero() {
       
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="max-w-5xl mx-auto">
-          {/* Enhanced title section */}
+          {/* Main title section with live indicator */}
           <AnimatedText>
             <div className="mb-8">
               <motion.div
@@ -60,7 +60,7 @@ export default function Hero() {
                 Crypto Made{" "}
                 <span className="text-primary relative">
                   Simple
-                  {/* Subtle glow effect */}
+                  {/* Subtle glow effect behind the primary text */}
                   <motion.div
                     className="absolute inset-0 bg-primary/20 blur-xl -z-10"
                     animate={{
@@ -83,7 +83,7 @@ export default function Hero() {
             </p>
           </AnimatedText>
           
-          {/* Enhanced CTA section */}
+          {/* Call-to-action buttons section */}
           <AnimatedText delay={0.4}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16">
               <motion.div
@@ -92,7 +92,7 @@ export default function Hero() {
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
-                {/* Enhanced shimmer effect */}
+                {/* Animated shimmer effect behind button */}
                 <motion.div
                   className="absolute -inset-0.5 bg-gradient-to-r from-primary/20 via-purple-500/20 to-primary/20 rounded-xl blur-sm opacity-0 group-hover:opacity-100"
                   animate={{
@@ -117,7 +117,7 @@ export default function Hero() {
                 </Button>
               </motion.div>
               
-              {/* Magic UI Shimmer Button - Fixed Size */}
+              {/* Magic UI Shimmer Button with consistent sizing */}
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -139,7 +139,7 @@ export default function Hero() {
             </div>
           </AnimatedText>
           
-          {/* Simple Info Popup */}
+          {/* Modal popup with CoinPulse information */}
           <AnimatePresence>
             {isModalOpen && (
               <motion.div
@@ -150,7 +150,7 @@ export default function Hero() {
                 className="fixed inset-0 z-50 flex items-center justify-center p-4"
                 onClick={closeModal}
               >
-                {/* Backdrop */}
+                {/* Modal backdrop with blur effect */}
                 <motion.div
                   className="absolute inset-0 bg-black/40 backdrop-blur-sm"
                   initial={{ opacity: 0 }}
@@ -158,7 +158,7 @@ export default function Hero() {
                   exit={{ opacity: 0 }}
                 />
                 
-                {/* Fixed Modal Card */}
+                {/* Main modal card with border animation */}
                 <motion.div
                   initial={{ scale: 0.95, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
@@ -167,14 +167,14 @@ export default function Hero() {
                   className="relative max-w-md w-full"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {/* Subtle Flowing Border Animation */}
+                  {/* Animated border gradient wrapper */}
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 p-[2px] animate-subtle-border">
                     <div className="w-full h-full bg-white/95 backdrop-blur-xl rounded-2xl" />
                   </div>
                   
-                  {/* Card Content */}
+                  {/* Card content and information */}
                   <div className="relative p-8 z-10">
-                    {/* Close Button */}
+                    {/* Close button positioned in top-right */}
                     <button
                       onClick={closeModal}
                       className="absolute top-4 right-4 p-2 bg-gray-100/80 backdrop-blur-sm border border-gray-200/50 rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-200/80 transition-all duration-200"

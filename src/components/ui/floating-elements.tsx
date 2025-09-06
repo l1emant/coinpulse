@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-// Crypto Icon Components - Updated for light theme consistency
+// Cryptocurrency icon components optimized for light theme
 const BitcoinIcon = () => (
   <svg viewBox="0 0 24 24" className="w-full h-full">
     <circle cx="12" cy="12" r="12" fill="#F7931A" opacity="0.4" />
@@ -124,10 +124,10 @@ const LitecoinIcon = () => (
 export default function FloatingElements() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {/* Animated gradient background - more visible for light mode */}
+      {/* Enhanced gradient background for better visibility */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-primary/15" />
       
-      {/* Crypto Icon Blobs - Bitcoin - enhanced */}
+      {/* Bitcoin icon with floating animation */}
       <motion.div
         className="absolute top-20 left-10 w-14 h-14 opacity-50"
         animate={{
