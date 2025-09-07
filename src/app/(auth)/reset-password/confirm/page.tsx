@@ -1,18 +1,28 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Lock, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AuthHeader from "@/features/auth/components/AuthHeader";
-import SignupForm from "@/features/auth/components/SignupForm";
+import ConfirmPasswordForm from "@/features/auth/components/ConfirmPasswordForm";
 
-export default function SignupPage() {
+function ResetPasswordConfirmContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isSuccess, setIsSuccess] = useState(false);
+  const token = searchParams.get('token');
 
-  const handleSignupSuccess = () => {
+  // Redirect to reset password page if no token is provided
+  useEffect(() => {
+    if (!token) {
+      router.push('/reset-password');
+    }
+  }, [token, router]);
+
+  const handleResetSuccess = () => {
     setIsSuccess(true);
   };
 
@@ -55,18 +65,73 @@ export default function SignupPage() {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               className="w-12 h-12 bg-green-100/30 backdrop-blur-sm border border-green-200/40 rounded-full flex items-center justify-center mx-auto mb-4"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <CheckCircle2 className="w-6 h-6 text-green-600" />
+            </motion.div>
+            <h3 className="text-xl font-semibold text-foreground mb-2">Password reset successful!</h3>
+            <p className="text-sm text-muted-foreground mb-6">
+              Your password has been updated successfully.
+            </p>
+            <Link href="/login">
+              <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-2.5 rounded-md transition-colors">
+                Back to login
+              </Button>
+            </Link>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // Show token missing message if no token is provided
+  if (!token) {
+    return (
+      <div className="min-h-screen relative overflow-hidden flex items-center justify-center px-4">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-primary/5 to-transparent" />
+        </div>
+        
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="relative text-center py-8 px-6"
+        >
+          <motion.div
+            className="absolute -inset-1 bg-gradient-to-r from-red-500/20 via-primary/20 to-red-500/20 rounded-xl blur-xl opacity-75"
+            animate={{
+              background: [
+                "linear-gradient(90deg, rgba(239,68,68,0.2) 0%, rgba(59,130,246,0.2) 50%, rgba(239,68,68,0.2) 100%)",
+                "linear-gradient(90deg, rgba(59,130,246,0.2) 0%, rgba(239,68,68,0.2) 50%, rgba(59,130,246,0.2) 100%)",
+                "linear-gradient(90deg, rgba(239,68,68,0.2) 0%, rgba(59,130,246,0.2) 50%, rgba(239,68,68,0.2) 100%)"
+              ],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          
+          <div className="relative bg-white/20 backdrop-blur-md border border-white/30 rounded-lg p-8 shadow-2xl max-w-sm w-full">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="w-12 h-12 bg-red-100/30 backdrop-blur-sm border border-red-200/40 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
             </motion.div>
-            <h3 className="text-xl font-semibold text-foreground mb-2">Welcome to CoinPulse!</h3>
-            <p className="text-sm text-muted-foreground">Your account has been created successfully.</p>
-            <Button 
-              onClick={() => router.push("/")} 
-              className="mt-6 w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-2.5 rounded-md transition-colors"
-            >
-              Continue to dashboard
-            </Button>
+            <h3 className="text-xl font-semibold text-foreground mb-2">Invalid reset link</h3>
+            <p className="text-sm text-muted-foreground mb-6">
+              No reset token provided. Please request a new password reset link.
+            </p>
+            <Link href="/reset-password">
+              <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-2.5 rounded-md transition-colors">
+                Request new reset link
+              </Button>
+            </Link>
           </div>
         </motion.div>
       </div>
@@ -123,49 +188,6 @@ export default function SignupPage() {
             delay: 1,
           }}
         />
-        
-        <motion.div
-          className="absolute top-1/2 right-1/6 w-20 h-20 bg-gradient-to-r from-accent/20 to-primary/20 rounded-full blur-xl"
-          animate={{
-            x: [0, 20, 0],
-            y: [0, -30, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2,
-          }}
-        />
-        
-        {/* Subtle geometric shapes */}
-        <motion.div
-          className="absolute top-1/3 right-1/3 w-2 h-2 bg-primary/30 rounded-full"
-          animate={{
-            scale: [1, 1.5, 1],
-            opacity: [0.3, 0.7, 0.3],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        
-        <motion.div
-          className="absolute bottom-1/3 left-1/3 w-3 h-3 bg-purple-500/30 rounded-full"
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.4, 0.8, 0.4],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1.5,
-          }}
-        />
       </div>
       
       <AuthHeader />
@@ -180,7 +202,7 @@ export default function SignupPage() {
               transition={{ duration: 0.5 }}
               className="text-2xl font-semibold text-foreground mb-2"
             >
-              Create account
+              Set new password
             </motion.h1>
             <motion.p
               initial={{ opacity: 0 }}
@@ -188,7 +210,7 @@ export default function SignupPage() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-sm text-muted-foreground"
             >
-              Join thousands of crypto enthusiasts
+              Please enter your new password below
             </motion.p>
           </div>
 
@@ -219,11 +241,19 @@ export default function SignupPage() {
             <div className="relative bg-white/20 backdrop-blur-md border border-white/30 rounded-lg p-6 shadow-2xl">
               {/* Subtle inner glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5 rounded-lg pointer-events-none" />
-              <SignupForm onSignupSuccess={handleSignupSuccess} />
+              <ConfirmPasswordForm token={token} onResetSuccess={handleResetSuccess} />
             </div>
           </motion.div>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ResetPasswordConfirmPage() {
+  return (
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <ResetPasswordConfirmContent />
+    </React.Suspense>
   );
 }

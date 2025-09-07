@@ -4,45 +4,69 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import AuthHeader from "@/components/ui/auth-header";
+import AuthHeader from "@/features/auth/components/AuthHeader";
+import LoginForm from "@/features/auth/components/LoginForm";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    setError("");
+  const handleLoginSuccess = () => {
+    setIsSuccess(true);
+    setTimeout(() => router.push("/"), 2000);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError("");
-
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      if (formData.email && formData.password) {
-        console.log("Login successful:", formData);
-        router.push("/");
-      } else {
-        setError("Please fill in all fields");
-      }
-    } catch (err) {
-      setError("Login failed. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // Show success message
+  if (isSuccess) {
+    return (
+      <div className="min-h-screen relative overflow-hidden flex items-center justify-center px-4">
+        {/* Background matching landing page */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-primary/5 to-transparent" />
+        </div>
+        
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="relative text-center py-8 px-6"
+        >
+          {/* Animated glow effect behind success card */}
+          <motion.div
+            className="absolute -inset-1 bg-gradient-to-r from-green-500/20 via-primary/20 to-green-500/20 rounded-xl blur-xl opacity-75"
+            animate={{
+              background: [
+                "linear-gradient(90deg, rgba(34,197,94,0.2) 0%, rgba(59,130,246,0.2) 50%, rgba(34,197,94,0.2) 100%)",
+                "linear-gradient(90deg, rgba(59,130,246,0.2) 0%, rgba(34,197,94,0.2) 50%, rgba(59,130,246,0.2) 100%)",
+                "linear-gradient(90deg, rgba(34,197,94,0.2) 0%, rgba(59,130,246,0.2) 50%, rgba(34,197,94,0.2) 100%)"
+              ],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          
+          <div className="relative bg-white/20 backdrop-blur-md border border-white/30 rounded-lg p-8 shadow-2xl max-w-sm w-full">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="w-12 h-12 bg-green-100/30 backdrop-blur-sm border border-green-200/40 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </motion.div>
+            <h3 className="text-xl font-semibold text-foreground mb-2">Login successful!</h3>
+            <p className="text-sm text-muted-foreground">Redirecting to your dashboard...</p>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -190,116 +214,9 @@ export default function LoginPage() {
             <div className="relative bg-white/20 backdrop-blur-md border border-white/30 rounded-lg p-6 shadow-2xl">
               {/* Subtle inner glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5 rounded-lg pointer-events-none" />
-            {/* Error message */}
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="relative mb-4 p-3 bg-red-50/90 backdrop-blur-sm border border-red-200/60 rounded-md"
-              >
-                <p className="text-red-700 text-sm">{error}</p>
-              </motion.div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Email field */}
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1">
-                  Email
-                </label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                  <input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
-                    className="w-full pl-9 pr-3 py-2.5 bg-white/60 backdrop-blur-sm border border-white/40 rounded-md focus:ring-2 focus:ring-primary focus:border-primary focus:bg-white/70 outline-none transition-all duration-300 text-sm text-foreground placeholder:text-muted-foreground shadow-sm"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Password field */}
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-foreground mb-1">
-                  Password
-                </label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                  <input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
-                    value={formData.password}
-                    onChange={(e) => handleInputChange("password", e.target.value)}
-                    className="w-full pl-9 pr-10 py-2.5 bg-white/60 backdrop-blur-sm border border-white/40 rounded-md focus:ring-2 focus:ring-primary focus:border-primary focus:bg-white/70 outline-none transition-all duration-300 text-sm text-foreground placeholder:text-muted-foreground shadow-sm"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
-                </div>
-              </div>
-
-              {/* Forgot password */}
-              <div className="flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => alert("Forgot password functionality is not implemented yet.")}
-                  className="text-sm text-primary hover:text-primary/80 transition-colors"
-                >
-                  Forgot password?
-                </button>
-              </div>
-
-              {/* Submit button */}
-              <Button
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-2.5 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                {isLoading ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Signing in...
-                  </div>
-                ) : (
-                  <>
-                    Sign in
-                    <ArrowRight className="w-4 h-4" />
-                  </>
-                )}
-              </Button>
-            </form>
-            
-            {/* Divider with improved design */}
-            <div className="mt-6 mb-4">
-              <div className="relative flex justify-center">
-                <span className="text-xs text-muted-foreground bg-transparent px-3 py-1">
-                  Don&apos;t have an account?
-                </span>
-              </div>
-            </div>
-
-            {/* Sign up link */}
-            <Link href="/signup">
-              <Button
-                variant="outline"
-                className="w-full border-white/40 bg-white/30 backdrop-blur-sm text-foreground hover:bg-white/40 hover:border-white/60 font-medium py-2.5 rounded-md transition-all duration-300 shadow-sm"
-              >
-                Create account
-              </Button>
-            </Link>
+              <LoginForm onLoginSuccess={handleLoginSuccess} />
             </div>
           </motion.div>
-
-          
         </div>
       </div>
     </div>

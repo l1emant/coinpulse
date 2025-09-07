@@ -3,16 +3,17 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AuthHeader from "@/features/auth/components/AuthHeader";
-import SignupForm from "@/features/auth/components/SignupForm";
+import ResetPasswordForm from "@/features/auth/components/ResetPasswordForm";
 
-export default function SignupPage() {
-  const router = useRouter();
+export default function ResetPasswordPage() {
   const [isSuccess, setIsSuccess] = useState(false);
+  const [email, setEmail] = useState("");
 
-  const handleSignupSuccess = () => {
+  const handleResetSuccess = (email: string) => {
+    setEmail(email);
     setIsSuccess(true);
   };
 
@@ -55,18 +56,21 @@ export default function SignupPage() {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               className="w-12 h-12 bg-green-100/30 backdrop-blur-sm border border-green-200/40 rounded-full flex items-center justify-center mx-auto mb-4"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
+              <Mail className="w-6 h-6 text-green-600" />
             </motion.div>
-            <h3 className="text-xl font-semibold text-foreground mb-2">Welcome to CoinPulse!</h3>
-            <p className="text-sm text-muted-foreground">Your account has been created successfully.</p>
-            <Button 
-              onClick={() => router.push("/")} 
-              className="mt-6 w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-2.5 rounded-md transition-colors"
-            >
-              Continue to dashboard
-            </Button>
+            <h3 className="text-xl font-semibold text-foreground mb-2">Check your email</h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              We&apos;ve sent a password reset link to <span className="font-medium">{email}</span>
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Didn&apos;t receive the email? Check your spam folder or{" "}
+              <button 
+                onClick={() => setIsSuccess(false)}
+                className="text-primary hover:text-primary/80 underline"
+              >
+                try again
+              </button>
+            </p>
           </div>
         </motion.div>
       </div>
@@ -123,49 +127,6 @@ export default function SignupPage() {
             delay: 1,
           }}
         />
-        
-        <motion.div
-          className="absolute top-1/2 right-1/6 w-20 h-20 bg-gradient-to-r from-accent/20 to-primary/20 rounded-full blur-xl"
-          animate={{
-            x: [0, 20, 0],
-            y: [0, -30, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2,
-          }}
-        />
-        
-        {/* Subtle geometric shapes */}
-        <motion.div
-          className="absolute top-1/3 right-1/3 w-2 h-2 bg-primary/30 rounded-full"
-          animate={{
-            scale: [1, 1.5, 1],
-            opacity: [0.3, 0.7, 0.3],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        
-        <motion.div
-          className="absolute bottom-1/3 left-1/3 w-3 h-3 bg-purple-500/30 rounded-full"
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.4, 0.8, 0.4],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1.5,
-          }}
-        />
       </div>
       
       <AuthHeader />
@@ -180,7 +141,7 @@ export default function SignupPage() {
               transition={{ duration: 0.5 }}
               className="text-2xl font-semibold text-foreground mb-2"
             >
-              Create account
+              Reset your password
             </motion.h1>
             <motion.p
               initial={{ opacity: 0 }}
@@ -188,7 +149,7 @@ export default function SignupPage() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-sm text-muted-foreground"
             >
-              Join thousands of crypto enthusiasts
+              Enter your email and we&apos;ll send you a link to reset your password
             </motion.p>
           </div>
 
@@ -219,7 +180,7 @@ export default function SignupPage() {
             <div className="relative bg-white/20 backdrop-blur-md border border-white/30 rounded-lg p-6 shadow-2xl">
               {/* Subtle inner glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5 rounded-lg pointer-events-none" />
-              <SignupForm onSignupSuccess={handleSignupSuccess} />
+              <ResetPasswordForm onResetSuccess={handleResetSuccess} />
             </div>
           </motion.div>
         </div>
