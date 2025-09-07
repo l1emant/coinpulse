@@ -5,6 +5,7 @@ import AnimatedText from "@/components/ui/animated-text"
 import FloatingElements from "@/components/ui/floating-elements"
 import { motion, AnimatePresence } from "framer-motion"
 import { TrendingUp, X } from "lucide-react"
+import Link from "next/link"
 import { useState } from "react"
 import { ShimmerButton } from "@/components/ui/shimmer-button"
 
@@ -51,26 +52,57 @@ export default function Hero() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm text-muted-foreground mb-6"
+                className="inline-flex items-center gap-3 px-5 py-3 bg-white/15 backdrop-blur-md border border-white/30 rounded-full text-sm text-foreground font-medium mb-8 shadow-lg"
               >
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                <motion.div
+                  className="w-3 h-3 bg-green-500 rounded-full"
+                  animate={{
+                    opacity: [0.5, 1, 0.5],
+                    scale: [1, 1.2, 1],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
                 <span>Live Market Data</span>
               </motion.div>
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground mb-6 leading-tight">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground mb-6 leading-tight tracking-tight">
                 Crypto Made{" "}
                 <span className="text-primary relative">
                   Simple
-                  {/* Subtle glow effect behind the primary text */}
+                  {/* Enhanced glow effect with multiple layers */}
                   <motion.div
-                    className="absolute inset-0 bg-primary/20 blur-xl -z-10"
-                    animate={{
-                      opacity: [0.5, 0.8, 0.5],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
+                    className="absolute inset-0 bg-primary/30 blur-xl -z-10"
+                    animate={
+                      {
+                        opacity: [0.4, 0.7, 0.4],
+                      }
+                    }
+                    transition={
+                      {
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }
+                    }
+                  />
+                  <motion.div
+                    className="absolute inset-0 bg-primary/20 blur-3xl -z-20"
+                    animate={
+                      {
+                        opacity: [0.2, 0.5, 0.2],
+                      }
+                    }
+                    transition={
+                      {
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: 0.5,
+                      }
+                    }
                   />
                 </span>
               </h1>
@@ -78,7 +110,7 @@ export default function Hero() {
           </AnimatedText>
           
           <AnimatedText delay={0.2}>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
               Track prices, manage your portfolio, and discover opportunities in the cryptocurrency market with ease.
             </p>
           </AnimatedText>
@@ -109,12 +141,14 @@ export default function Hero() {
                   }}
                 />
                 
-                <Button 
-                  className="relative bg-white/20 backdrop-blur-sm border border-white/40 text-foreground hover:bg-white/30 hover:border-white/50 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-3 h-12 px-8 rounded-xl min-w-[160px]"
-                >
-                  <TrendingUp className="w-6 h-6" />
-                  Start Tracking
-                </Button>
+                <Link href="/login">
+                  <Button 
+                    className="relative bg-white/20 backdrop-blur-sm border border-white/40 text-foreground hover:bg-white/30 hover:border-white/50 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-3 h-12 px-8 rounded-xl min-w-[160px]"
+                  >
+                    <TrendingUp className="w-6 h-6" />
+                    Start Tracking
+                  </Button>
+                </Link>
               </motion.div>
               
               {/* Magic UI Shimmer Button with consistent sizing */}
@@ -211,8 +245,6 @@ export default function Hero() {
               </motion.div>
             )}
           </AnimatePresence>
-          
-
           
         </div>
       </div>

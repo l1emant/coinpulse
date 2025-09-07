@@ -3,12 +3,13 @@
 import { Button } from "@/components/ui/button"
 import { TrendingUp, BarChart3 } from "lucide-react"
 import { motion } from "framer-motion"
+import Link from "next/link"
 
 export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 transparent-header transition-all duration-300">
       <div className="container mx-auto px-4 py-4 relative z-10">
-        <nav className="flex items-center justify-between">
+        <nav className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center space-x-2">
             <TrendingUp className="h-8 w-8 text-primary" />
             <span className="text-2xl font-bold text-primary">
@@ -16,13 +17,13 @@ export default function Header() {
             </span>
           </div>
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#home" className="text-foreground/70 hover:text-primary transition-colors duration-300 font-semibold">
+            <a href="#home" className="text-foreground/70 hover:text-primary transition-colors duration-300 font-semibold whitespace-nowrap">
               Home
             </a>
-            <a href="#about" className="text-foreground/70 hover:text-primary transition-colors duration-300 font-semibold">
+            <a href="#about" className="text-foreground/70 hover:text-primary transition-colors duration-300 font-semibold whitespace-nowrap">
               About
             </a>
-            <a href="#contact" className="text-foreground/70 hover:text-primary transition-colors duration-300 font-semibold">
+            <a href="#contact" className="text-foreground/70 hover:text-primary transition-colors duration-300 font-semibold whitespace-nowrap">
               Contact
             </a>
             {/* Login button with subtle shimmer animation */}
@@ -42,13 +43,15 @@ export default function Header() {
                   ease: "easeInOut"
                 }}
               />
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="relative bg-white/20 backdrop-blur-sm border border-white/40 text-foreground hover:bg-white/30 hover:border-white/50 transition-all duration-300"
-              >
-                Login
-              </Button>
+              <Link href="/login">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="relative bg-white/20 backdrop-blur-sm border border-white/40 text-foreground hover:bg-white/30 hover:border-white/50 transition-all duration-300"
+                >
+                  Login
+                </Button>
+              </Link>
             </motion.div>
             
             {/* Sign up button with matching shimmer effect */}
@@ -68,12 +71,14 @@ export default function Header() {
                   ease: "easeInOut"
                 }}
               />
-              <Button 
-                size="sm" 
-                className="relative bg-white/20 backdrop-blur-sm border border-white/40 text-foreground hover:bg-white/30 hover:border-white/50 transition-all duration-300"
-              >
-                Sign Up
-              </Button>
+              <Link href="/signup">
+                <Button 
+                  size="sm" 
+                  className="relative bg-white/20 backdrop-blur-sm border border-white/40 text-foreground hover:bg-white/30 hover:border-white/50 transition-all duration-300"
+                >
+                  Sign Up
+                </Button>
+              </Link>
             </motion.div>
           </div>
           {/* Mobile navigation menu button */}
